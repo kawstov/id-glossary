@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Lexicon: The Instructional Design Dictionary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .content-intro {
+            font-size: 16px;
+            color: black; /* Set to black font */
+            margin-bottom: 20px;
+        }
+        .user-prompt {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .alphabet-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px; /* Keep the gap between buttons same */
+            margin-bottom: 20px;
+        }
+        .alphabet-buttons button {
+            padding: 7px 10.5px; /* Reduced by 30% */
+            font-size: 12.6px; /* Reduced by 30% from 18px */
+            cursor: pointer;
+            background-color: #333; /* Dark grey color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .alphabet-buttons button.selected {
+            background-color: #007bff; /* Updated to blue color when selected */
+        }
+        .alphabet-buttons button.disabled {
+            background-color: #d0d3d5; /* Grey color for disabled buttons */
+            cursor: not-allowed; /* Cursor change for disabled buttons */
+        }
+        .styled-container {
+            display: none;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .term-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .term-table th, .term-table td {
+            padding: 10px;
+            border: none;
+        }
+        .term-table td {
+            cursor: pointer;
+            text-align: left;
+        }
+        .definition-title {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .back-button {
+            margin-top: 20px;
+            cursor: pointer;
+            padding: 7px 10.5px; /* Reduced button size by 30% */
+            font-size: 12.6px; /* Reduced font size by 30% */
+            background-color: #007bff; /* Updated to blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #0056b3; /* Darker blue color when hovered */
+        }
+        .no-terms {
+            color: #d3d3d3; /* Light grey color for no terms found */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- New introductory content in black font -->
+    <div class="content-intro">
+        This is a small side project of mine. This page will act as a glossary to all the L&D business speak I have learned or will learn in the future. It will help anyone refer to the terms quickly and prepare for a quick and confident conversation.
+    </div>
+
+    <div class="user-prompt">
+        Click on a letter below to view available terms. Then, click on a term to see its definition and explanation.
+    </div>
+
+    <div class="alphabet-buttons" id="alphabetButtons"></div>
+
+    <!-- Container for the term table with similar styling as the definition section -->
+    <div class="styled-container" id="termContainer">
+        <table class="term-table" id="termTable">
+            <thead>
+                <tr>
+                    <th id="tableHeader">Term</th>
+                </tr>
+            </thead>
+            <tbody id="termTableBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Section for displaying term definition with similar styling -->
+    <div class="styled-container" id="definitionSection">
+        <h2 id="termTitle"></h2>
+
+        <div class="definition-title">Definition</div>
+        <p id="termDefinition"></p>
+
+        <div class="definition-title">Explanation</div>
+        <p id="termExplanation"></p>
+
+        <div class="definition-title">Example</div>
+        <p id="termExample"></p>
+
+        <button class="back-button" id="backButton">Back to Terms</button>
+    </div>
+
+    <script>
+        // JSON data for terms
+        const dictionaryData = [
+            {
+                "term": "ADDIE",
+                "definition": "A framework used by instructional designers.",
+                "explanation": "ADDIE stands for Analyze, Design, Develop, Implement, and Evaluate. It's a widely used instructional design model.",
+                "example": "A typical ADDIE model implementation begins with a needs assessment."
+            },
+            {
+                "term": "Blended Learning",
+                "definition": "A mix of traditional and online learning.",
+                "explanation": "Blended learning combines face-to-face instruction with online learning to provide a more comprehensive learning experience.",
+                "example": "In a blended learning setup, students attend physical classes and also use an online portal for self-study."
+            },
+            {
+                "term": "Competency-Based Learning",
+                "definition": "Focuses on mastering skills.",
+                "explanation": "In competency-based learning, students advance based on their ability to demonstrate mastery of a skill or knowledge.",
+                "example": "A student progresses through a course only after demonstrating proficiency in each module's content."
+            },
+            {
+                "term": "Digital Storytelling",
+                "definition": "Using digital tools to tell stories.",
+                "explanation": "Digital storytelling involves using digital media to create and share narratives. This can include text, images, audio, and video."
+            },
+            {
+                "term": "Constructivism",
+                "definition": "A learning theory that emphasizes the learner's active role in building their own understanding.",
+                "explanation": "Constructivism suggests that learners construct their own understanding and knowledge of the world through experiences and reflecting on those experiences.",
+                "example": "In a constructivist classroom, students might engage in problem-based learning where they explore real-world problems and develop their own solutions."
+            },
+            {
+                "term": "Scaffolding",
+                "definition": "Support provided to learners to achieve a higher level of understanding.",
+                "explanation": "Scaffolding involves providing temporary support to learners that is gradually removed as they gain independence.",
+                "example": "A teacher might initially provide a detailed outline for an essay and gradually reduce the support as the students become more capable of organizing their thoughts independently."
+            },
+            {
+                "term": "Formative Assessment",
+                "definition": "Assessment used to monitor student learning and provide ongoing feedback.",
+                "explanation": "Formative assessment is used to inform instruction and provide feedback to students to improve their learning before the final evaluation.",
+                "example": "Quizzes, class discussions, and peer reviews are examples of formative assessments."
+            },
+            {
+                "term": "Summative Assessment",
+                "definition": "Assessment used to evaluate student learning at the end of an instructional unit.",
+                "explanation": "Summative assessment is used to judge the effectiveness of a learning experience and to determine if students have achieved the learning objectives.",
+                "example": "Final exams, end-of-term projects, and standardized tests are examples of summative assessments."
+            },
+            {
+                "term": "Metacognition",
+                "definition": "Awareness and understanding of one's own thought processes.",
+                "explanation": "Metacognition involves thinking about one's own learning and thinking processes, which can help in planning, monitoring, and evaluating one's own learning.",
+                "example": "A student using self-reflection techniques to assess their understanding of a topic and adjust their study strategies accordingly."
+            },
+            {
+                "term": "Cognitive Load Theory",
+                "definition": "The theory that the human brain has a limited capacity for processing information.",
+                "explanation": "Cognitive Load Theory suggests that instructional design should minimize unnecessary cognitive load to enhance learning.",
+                "example": "Presenting information in manageable chunks and using visual aids to reduce extraneous cognitive load."
+            },
+            {
+                "term": "Gagne's Nine Events of Instruction",
+                "definition": "A systematic approach to instructional design.",
+                "explanation": "Gagne's Nine Events of Instruction is a model that outlines nine steps to follow to create effective learning experiences, including gaining attention, presenting content, and providing feedback.",
+                "example": "An instructor might use Gagne's Nine Events by starting a lesson with a relevant story to gain attention, then presenting new material and providing opportunities for practice."
+            },
+            {
+                "term": "Kolb's Experiential Learning Theory",
+                "definition": "A theory that emphasizes learning through experience.",
+                "explanation": "Kolb's Experiential Learning Theory posits that learning is a process involving four stages: concrete experience, reflective observation, abstract conceptualization, and active experimentation.",
+                "example": "In a workshop setting, participants might engage in a hands-on activity (concrete experience), reflect on their performance (reflective observation), discuss insights (abstract conceptualization), and then apply new strategies in subsequent activities (active experimentation)."
+            },
+            {
+                "term": "Bloom's Taxonomy",
+                "definition": "A classification system for learning objectives.",
+                "explanation": "Bloom's Taxonomy categorizes learning objectives into cognitive, affective, and psychomotor domains, with levels of complexity such as remembering, understanding, applying, analyzing, evaluating, and creating.",
+                "example": "In designing a lesson, a teacher might aim to move students from basic recall of facts (remembering) to higher-order skills such as analyzing and evaluating information."
+            },
+            {
+                "term": "Flipped Classroom",
+                "definition": "An instructional strategy where students review content at home and practice it in class.",
+                "explanation": "In a flipped classroom, traditional lectures are replaced with pre-recorded videos or reading assignments that students complete outside of class, while class time is reserved for interactive discussions and activities.",
+                "example": "A teacher might assign a video lecture for homework, and then use class time for group activities, discussions, and hands-on exercises to reinforce the content."
+            },
+            {
+                "term": "Andragogy",
+                "definition": "The method and practice of teaching adult learners.",
+                "explanation": "Andragogy refers to a learner-centered approach in adult education, with a focus on self-directed learning, experience-based learning, and problem-solving.",
+                "example": "In an andragogical approach, learners are encouraged to draw from their own experiences and apply them to solve real-world problems in the classroom."
+            },
+            {
+                "term": "Authentic Learning",
+                "definition": "Learning that is rooted in real-world contexts.",
+                "explanation": "Authentic learning suggests that learning is most effective when it takes place in a context similar to where it will be applied, emphasizing real-world relevance.",
+                "example": "Medical students might engage in simulations or clinical rotations to learn skills in environments that closely mirror the conditions where they'll eventually apply them."
+            }
+        ];
+
+        // Function to create alphabet buttons
+        function createAlphabetButtons() {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            const alphabetButtonsContainer = document.getElementById('alphabetButtons');
+
+            alphabet.forEach(letter => {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.classList.add('disabled');
+                button.addEventListener('click', () => handleLetterClick(letter));
+                alphabetButtonsContainer.appendChild(button);
+            });
+
+            // Enable buttons for letters present in the dictionary data
+            enableAlphabetButtons();
+        }
+
+        // Function to enable alphabet buttons based on available terms
+        function enableAlphabetButtons() {
+            const alphabetButtons = document.querySelectorAll('.alphabet-buttons button');
+
+            alphabetButtons.forEach(button => {
+                const letter = button.textContent;
+                const termsForLetter = dictionaryData.filter(term => term.term.startsWith(letter));
+
+                if (termsForLetter.length > 0) {
+                    button.classList.remove('disabled');
+                }
+            });
+        }
+
+        // Function to handle letter button click
+        function handleLetterClick(letter) {
+            const buttons = document.querySelectorAll('.alphabet-buttons button');
+            buttons.forEach(button => button.classList.remove('selected'));
+
+            const clickedButton = Array.from(buttons).find(button => button.textContent === letter);
+            clickedButton.classList.add('selected');
+
+            displayTermsForLetter(letter);
+        }
+
+        // Function to display terms for a specific letter
+        function displayTermsForLetter(letter) {
+            const termContainer = document.getElementById('termContainer');
+            const termTableBody = document.getElementById('termTableBody');
+
+            const termsForLetter = dictionaryData.filter(term => term.term.startsWith(letter));
+            termTableBody.innerHTML = ''; // Clear previous terms
+
+            if (termsForLetter.length > 0) {
+                termsForLetter.forEach(term => {
+                    const row = document.createElement('tr');
+                    const cell = document.createElement('td');
+                    cell.textContent = term.term;
+                    cell.addEventListener('click', () => displayTermDefinition(term));
+                    row.appendChild(cell);
+                    termTableBody.appendChild(row);
+                });
+                termContainer.style.display = 'block'; // Show the term table
+                document.getElementById('definitionSection').style.display = 'none'; // Hide definition section
+            } else {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.textContent = 'No terms found';
+                cell.classList.add('no-terms');
+                row.appendChild(cell);
+                termTableBody.appendChild(row);
+                termContainer.style.display = 'block';
+                document.getElementById('definitionSection').style.display = 'none';
+            }
+        }
+
+        // Function to display the definition of a term
+        function displayTermDefinition(term) {
+            const termTitle = document.getElementById('termTitle');
+            const termDefinition = document.getElementById('termDefinition');
+            const termExplanation = document.getElementById('termExplanation');
+            const termExample = document.getElementById('termExample');
+
+            termTitle.textContent = term.term;
+            termDefinition.textContent = term.definition || 'No definition available';
+            termExplanation.textContent = term.explanation || 'No explanation available';
+            termExample.textContent = term.example || 'No example available';
+
+            document.getElementById('definitionSection').style.display = 'block'; // Show the definition section
+            document.getElementById('termContainer').style.display = 'none'; // Hide the term table
+        }
+
+        // Function to go back to the term list
+        document.getElementById('backButton').addEventListener('click', () => {
+            document.getElementById('definitionSection').style.display = 'none';
+            document.getElementById('termContainer').style.display = 'block';
+        });
+
+        // Initialize the page with alphabet buttons
+        createAlphabetButtons();
+    </script>
+
+</body>
+</html>
