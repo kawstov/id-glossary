@@ -89,10 +89,10 @@
             cursor: pointer;
         }
         .tag:hover {
-            background-color: #0056b3;
+            background-color: #505050;
         }
         .tag.active {
-            background-color: #0056b3;
+            background-color: #505050;
         }
         .back-button {
             margin-top: 20px;
@@ -140,7 +140,7 @@
         <table class="term-table" id="termTable">
             <thead>
                 <tr>
-                    <h2 id="tableHeader">Term</h2>
+                    <th><h2 id="tableHeader">Term</h2></th>
                 </tr>
             </thead>
             <tbody id="termTableBody"></tbody>
@@ -172,23 +172,23 @@
             {
                 "term": "ADDIE",
                 "definition": "A framework used by instructional designers.",
-                "explanation": "ADDIE stands for Analyze, Design, Develop, Implement, and Evaluate.",
+                "explanation": "ADDIE stands for Analyze, Design, Develop, Implement, and Evaluate. This is a framework to plan, design and implement a curriculum and assess its efficiency.",
                 "example": "A typical ADDIE model implementation begins with a needs assessment.",
-                "tags": ["#Framework", "#Instructional-Design", "#Models"]
+                "tags": ["#Framework", "#Instructional-Design", "#Models", ""]
             },
             {
                 "term": "Blended Learning",
                 "definition": "A mix of traditional and online learning.",
                 "explanation": "Blended learning combines face-to-face instruction with online learning.",
                 "example": "In a blended learning setup, students attend physical classes and use an online portal.",
-                "tags": ["#Learning", "#Technology", "#Hybrid"]
+                "tags": ["#Learning", "#Technology", "#Hybrid", ""]
             },
             {
                 "term": "Competency-Based Learning",
                 "definition": "Focuses on mastering skills.",
                 "explanation": "Students advance based on demonstrating mastery of skills.",
                 "example": "A student progresses only after demonstrating proficiency in content.",
-                "tags": ["#Learning", "#Skills", "#Education"]
+                "tags": ["#Learning", "#Skills", "#Education", "#Competency"]
             }
         ];
 
@@ -241,6 +241,7 @@
 
         function displayTermsForLetter(letter) {
             const filteredTerms = dictionaryData.filter(term => term.term.startsWith(letter));
+            document.getElementById('tableHeader').innerHTML = `Terms Starting with: <span style="color: blue;">${letter}</span>`;
             displayFilteredTerms(filteredTerms);
         }
 
@@ -279,19 +280,22 @@
             const termExample = document.getElementById('termExample');
             const termTags = document.getElementById('termTags');
 
-            termTitle.textContent = term.term;
+            termTitle.innerHTML = `<span style="color: blue;">${term.term}</span>`;
             termDefinition.textContent = term.definition;
             termExplanation.textContent = term.explanation;
             termExample.textContent = term.example;
             termTags.innerHTML = '';
 
-            term.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.textContent = tag;
-                tagElement.classList.add('tag');
-                tagElement.addEventListener('click', () => handleTagClick(tag));
-                termTags.appendChild(tagElement);
-            });
+            // Filter out empty tags before rendering
+            term.tags
+                .filter(tag => tag.trim() !== '') // Remove empty or whitespace-only tags
+                .forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.textContent = tag;
+                    tagElement.classList.add('tag');
+                    tagElement.addEventListener('click', () => handleTagClick(tag));
+                    termTags.appendChild(tagElement);
+                });
 
             document.getElementById('termContainer').style.display = 'none';
             document.getElementById('definitionSection').style.display = 'block';
@@ -301,6 +305,9 @@
             activeTags.clear();
             activeTags.add(tag.toLowerCase());
             const filteredTerms = dictionaryData.filter(term => term.tags.some(t => activeTags.has(t.toLowerCase())));
+
+            document.getElementById('tableHeader').innerHTML = `Topics Tagged: <span style="color: blue;">${tag}</span>`;
+
             displayFilteredTerms(filteredTerms);
         }
 
