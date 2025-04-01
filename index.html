@@ -1,7 +1,1140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>L&D Terms</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: white;
+        min-height: 100vh;
+        padding: 3rem 1rem;
+      }
+
+      .container {
+        max-width: 42rem;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      /* Center alignment for the home page container */
+      .home-container {
+        text-align: center;
+      }
+
+      .title {
+        font-size: 2.25rem;
+        text-align: left;
+        font-weight: 700;
+        color: rgb(31, 41, 55);
+        margin-bottom: 1rem;
+      }
+
+      /* Center alignment for the home page title */
+      .home-container .title {
+        text-align: center;
+      }
+
+      .logo {
+        margin: 2rem auto;
+        width: 48px;
+        height: 48px;
+        color: rgb(37, 99, 235);
+      }
+
+      .description {
+        color: rgb(75, 85, 99);
+        margin-bottom: 2rem;
+        line-height: 1.5;
+      }
+
+      .search-container {
+        max-width: 28rem;
+        margin: 0 auto 2rem;
+        position: relative;
+      }
+
+      .search-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .search-input-wrapper {
+        position: relative;
+        flex: 1;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+        border: 1px solid rgb(209, 213, 219);
+        border-radius: 0.5rem;
+        outline: none;
+        font-size: 0.875rem;
+      }
+
+      .search-input:focus {
+        border-color: rgb(37, 99, 235);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgb(156, 163, 175);
+      }
+
+      .search-button {
+        padding: 0.4rem 1.2rem;
+        background-color: rgb(37, 99, 235);
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+        font-size: 0.9rem;
+      }
+
+      .search-button:hover {
+        background-color: rgb(29, 78, 216);
+      }
+
+      .keyboard {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.25rem;
+        max-width: 36rem;
+        margin: 0 auto;
+      }
+
+      .key {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        font-weight: 500;
+        background-color: white;
+        border: 1px solid rgb(229, 231, 235);
+        border-radius: 0.375rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        padding: 0.25rem;
+        color: rgb(55, 65, 81); /* Dark grey color for active buttons */
+      }
+
+      .key:not(.disabled):hover {
+        background-color: rgb(239, 246, 255);
+        border-color: rgb(191, 219, 254);
+      }
+
+      .key.disabled {
+        background-color: rgb(243, 244, 246);
+        border-color: rgb(229, 231, 235);
+        color: rgb(156, 163, 175);
+        cursor: not-allowed;
+      }
+
+      .content {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+      }
+
+      .term-list {
+        list-style: none;
+      }
+
+      .term-item {
+        padding: 0.75rem;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .term-item:hover {
+        background-color: rgb(249, 250, 251);
+      }
+
+      .term-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .bookmark-button {
+        padding: 0.5rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: 9999px;
+        color: rgb(156, 163, 175);
+        z-index: 2;
+        position: relative;
+      }
+
+      .bookmark-button:hover {
+        background-color: white !important;
+      }
+
+      .bookmark-button.active {
+        color: rgb(234, 179, 8);
+      }
+
+      .tags-section {
+        margin: 1.5rem auto;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        max-width: 36rem;
+        text-align: left;
+      }
+      
+      .tags-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.5rem 0;
+        justify-content: flex-start;
+        max-width: 100%;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background-color: rgb(239, 246, 255);
+        color: rgb(37, 99, 235);
+        border-radius: 9999px;
+        margin: 0.25rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: normal;
+        text-align: center;
+        font-size: 0.85rem;
+      }
+
+      .tag:hover {
+        background-color: rgb(219, 234, 254);
+        color: rgb(37, 99, 235);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      /* Slightly larger tags for those with more terms */
+      .tag[data-count="3"], 
+      .tag[data-count="4"], 
+      .tag[data-count="5"] {
+        font-size: 0.9rem;
+      }
+      
+      .tag[data-count="6"],
+      .tag[data-count="7"],
+      .tag[data-count="8"] {
+        font-size: 0.95rem;
+      }
+      
+      .tag[data-count="9"],
+      .tag[data-count="10"],
+      .tag[data-count^="1"],
+      .tag[data-count^="2"] {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .back-button {
+        color: white;
+        background-color: rgb(37, 99, 235);
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        margin-top: 1.25rem;
+        margin-right: 0.5rem;
+        transition: background-color 0.2s;
+        font-size: 0.9rem;
+      }
+
+      .back-button:hover {
+        background-color: rgb(29, 78, 216);
+      }
+
+.section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 1rem 0 0.75rem;
+        text-align: left;
+      }
+	  
+      .section-title-bookmark {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 1rem 0 0.75rem;
+        text-align: center;
+		padding-bottom: 15px;
+      }
+
+      .term-definition,
+      .term-example {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        color: rgb(55, 65, 81);
+        font-weight: normal;
+        text-align: left;
+      }
+
+      .button-container {
+        display: flex;
+        margin-top: 1.5rem;
+      }
+
+      /* Bookmark section styling */
+      .bookmarks-section {
+        margin: 1.5rem auto;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        max-width: 36rem;
+        text-align: left;
+      }
+
+      .bookmarks-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .bookmark-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background-color: #e6f2ff;
+        border: 1px solid #cce4ff;
+        border-radius: 16px;
+        padding: 4px 10px;
+        font-size: 0.85rem;
+        color: rgb(55, 65, 81);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+      }
+
+      .bookmark-pill:hover {
+        background-color: #cce4ff;
+        color: rgb(55, 65, 81);
+      }
+
+      .bookmark-pill.view-all {
+        background-color: #f0f4f8;
+        border-color: #dde4ed;
+        color: rgb(55, 65, 81);
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .bookmark-pill.view-all:hover {
+        background-color: #e2e8f0;
+        color: rgb(55, 65, 81);
+      }
+
+      .bookmark-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Loading indicator */
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 50vh;
+      }
+
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgb(229, 231, 235);
+        border-top-color: rgb(37, 99, 235);
+        border-radius: 50%;
+        animation: spinner 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-container {
+        text-align: center;
+        padding: 2rem;
+        max-width: 32rem;
+        margin: 0 auto;
+      }
+
+      .error-icon {
+        color: #ef4444;
+        margin-bottom: 1rem;
+        width: 48px;
+        height: 48px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      // Main class for the glossary application
+      class GlossaryApp {
+        constructor() {
+          // Load bookmarks from localStorage if available
+          let savedBookmarks = [];
+          try {
+            const bookmarksStr = localStorage.getItem("glossaryBookmarks");
+            console.log("Retrieved bookmarks from localStorage:", bookmarksStr);
+
+            if (bookmarksStr) {
+              savedBookmarks = JSON.parse(bookmarksStr);
+              console.log("Parsed bookmarks:", savedBookmarks);
+            }
+          } catch (error) {
+            console.error("Error loading bookmarks from localStorage:", error);
+            savedBookmarks = [];
+          }
+
+          this.state = {
+            glossaryData: [],
+            isLoading: true,
+            error: null,
+            selectedLetter: null,
+            selectedTerm: null,
+            selectedTag: null,
+            searchQuery: "",
+            activeSearch: "",
+            bookmarks: savedBookmarks,
+            previousView: null, // To track where to return to
+            showingBookmarks: false, // For displaying bookmark list view
+          };
+
+          this.app = document.getElementById("app");
+
+          // Bind ALL methods to ensure 'this' refers to the class instance
+          this.handleLetterClick = this.handleLetterClick.bind(this);
+          this.handleTagClick = this.handleTagClick.bind(this);
+          this.handleTermClick = this.handleTermClick.bind(this);
+          this.handleBookmark = this.handleBookmark.bind(this);
+          this.handleSearch = this.handleSearch.bind(this);
+          this.resetToHome = this.resetToHome.bind(this);
+          this.returnToPreviousView = this.returnToPreviousView.bind(this);
+          this.saveBookmarksToStorage = this.saveBookmarksToStorage.bind(this);
+          this.handleShowBookmarks = this.handleShowBookmarks.bind(this);
+          this.getBookmarkedTerms = this.getBookmarkedTerms.bind(this);
+          this.getFilteredTerms = this.getFilteredTerms.bind(this);
+          this.renderBookmarksSection = this.renderBookmarksSection.bind(this);
+          this.renderAlphabetKeyboard = this.renderAlphabetKeyboard.bind(this);
+          this.setState = this.setState.bind(this);
+          this.render = this.render.bind(this);
+
+          // Load data from Google Sheets
+          this.fetchGlossaryData();
+        }
+
+        // Fetch data from Google Sheets
+        async fetchGlossaryData() {
+          try {
+            const googleSheetsUrl =
+              "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgDJx9q9WU5laMq2UoHGQcW6Xhve_liRJ9rUYxZBy7vko4cvyAJM26xDen8TMJcjVzDmDLq-sirArHTgqa5Fn3xCzSH71DJhIMZ02S2O44Cc0if24f81FaKKLLGFFSe3host4hBp5B0BmsaDafJtdruYDpKK8BzbQ75hB6_Pyl6NbyBOMgCKg6ZFuTRzT6otRQgufhh_cZ45QkHw9cIRZjc-e7J3SkOrfFVyNxts6LXaeFWrs6vZZCxJiVALVW6_ljgQYBQu0cgb3aqyGIR52WJDzPveQ&lib=MIfn9YLCV22Rv2x57iaT_uga_c_o8YQ-H";
+            const response = await fetch(googleSheetsUrl);
+
+            if (!response.ok) {
+              throw new Error(
+                `Failed to fetch data: ${response.status} ${response.statusText}`,
+              );
+            }
+
+            const data = await response.json();
+
+            // Process the data to ensure it conforms to our expected structure
+            const processedData = data.map((item, index) => {
+              // Ensure tags is an array
+              const tags = Array.isArray(item.tags)
+                ? item.tags
+                : typeof item.tags === "string"
+                  ? item.tags.split(",").map((tag) => tag.trim())
+                  : [];
+
+              return {
+                id: item.id || (index + 1).toString(), // Use provided ID or generate a sequential one
+                term: item.term || "",
+                definition: item.definition || "",
+                example: item.example || "",
+                tags: tags,
+              };
+            });
+
+            this.setState({
+              glossaryData: processedData,
+              isLoading: false,
+              error: null,
+            });
+          } catch (error) {
+            console.error("Error fetching glossary data:", error);
+            this.setState({
+              isLoading: false,
+              error: error.message,
+            });
+          }
+        }
+
+        // Save bookmarks to localStorage
+        saveBookmarksToStorage() {
+          try {
+            // Add a console log to track every save operation
+            console.log(
+              "Saving bookmarks to localStorage:",
+              this.state.bookmarks,
+            );
+
+            // Direct stringification and saving
+            const bookmarksString = JSON.stringify(this.state.bookmarks);
+            localStorage.setItem("glossaryBookmarks", bookmarksString);
+
+            // Verify the save operation
+            const savedBookmarks = localStorage.getItem("glossaryBookmarks");
+            console.log("Bookmarks saved, verification:", savedBookmarks);
+
+            // Return true to indicate success
+            return true;
+          } catch (error) {
+            console.error("Error saving bookmarks to localStorage:", error);
+            return false;
+          }
+        }
+
+        setState(newState, callback) {
+          this.state = { ...this.state, ...newState };
+          this.render();
+
+          // Execute callback after rendering if provided
+          if (callback && typeof callback === "function") {
+            callback();
+          }
+        }
+
+        handleLetterClick(letter) {
+          this.setState({
+            selectedLetter: letter,
+            selectedTag: null,
+            selectedTerm: null,
+            searchQuery: "",
+            activeSearch: "",
+            previousView: null,
+          });
+        }
+
+        handleTagClick(tag) {
+          // Convert the tag to lowercase for case-insensitive matching
+          const tagLower = tag.toLowerCase();
+
+          this.setState({
+            selectedTag: tagLower,
+            selectedLetter: null,
+            selectedTerm: null,
+            searchQuery: "",
+            activeSearch: "",
+            previousView: "home",
+            showingBookmarks: false,
+          });
+        }
+
+        handleTermClick(termId) {
+          const term = this.state.glossaryData.find((t) => t.id === termId);
+          if (!term) return;
+
+          let currentView = "home";
+          if (this.state.selectedLetter) {
+            currentView = "letter";
+          } else if (this.state.selectedTag) {
+            currentView = "tag";
+          } else if (this.state.activeSearch) {
+            currentView = "search";
+          } else if (this.state.showingBookmarks) {
+            currentView = "bookmarks";
+          }
+
+          this.setState({
+            selectedTerm: term,
+            previousView: currentView,
+          });
+        }
+
+        handleBookmark(termId) {
+          console.log("Bookmark clicked for term ID:", termId);
+          // Clone the current bookmarks array
+          const bookmarksCopy = [...this.state.bookmarks];
+          const index = bookmarksCopy.indexOf(termId);
+
+          if (index !== -1) {
+            console.log("Removing bookmark for term ID:", termId);
+            bookmarksCopy.splice(index, 1);
+          } else {
+            console.log("Adding bookmark for term ID:", termId);
+            bookmarksCopy.push(termId);
+          }
+
+          // Update state directly and then save
+          this.state.bookmarks = bookmarksCopy;
+          console.log("Updated bookmarks:", this.state.bookmarks);
+          this.saveBookmarksToStorage();
+
+          // Re-render the UI to reflect changes
+          this.render();
+        }
+
+        handleSearch(e) {
+          e.preventDefault();
+          
+          // Get the current value directly from the input field to ensure we have the latest value
+          const searchInput = this.app.querySelector(".search-input");
+          const currentQuery = searchInput ? searchInput.value : this.state.searchQuery;
+          
+          this.setState({
+            searchQuery: currentQuery,  // Make sure state is updated with latest value
+            activeSearch: currentQuery, // Use this for filtering
+            selectedLetter: null,
+            selectedTag: null,
+            selectedTerm: null,
+            previousView: "home",
+            showingBookmarks: false,
+          });
+        }
+
+        resetToHome() {
+          this.setState({
+            selectedLetter: null,
+            selectedTag: null,
+            selectedTerm: null,
+            searchQuery: "",
+            activeSearch: "",
+            previousView: null,
+            showingBookmarks: false,
+          });
+        }
+
+        returnToPreviousView() {
+          if (
+            this.state.previousView === "letter" ||
+            this.state.previousView === "tag" ||
+            this.state.previousView === "search"
+          ) {
+            this.setState({
+              selectedTerm: null,
+              previousView: "home",
+            });
+          } else if (this.state.previousView === "bookmarks") {
+            this.setState({
+              selectedTerm: null,
+              showingBookmarks: true,
+              previousView: "home",
+            });
+          } else {
+            this.resetToHome();
+          }
+        }
+
+        handleShowBookmarks() {
+          this.setState({
+            showingBookmarks: true,
+            selectedLetter: null,
+            selectedTag: null,
+            selectedTerm: null,
+            searchQuery: "",
+            activeSearch: "",
+            previousView: "home",
+          });
+        }
+
+        // Get filtered terms based on current selection
+        getFilteredTerms() {
+          const { glossaryData, selectedLetter, selectedTag, activeSearch } =
+            this.state;
+
+          if (selectedLetter) {
+            return glossaryData.filter((term) => {
+              const firstChar = term.term.charAt(0);
+              // For numbers, do direct comparison, for letters, convert to uppercase
+              return /^\d$/.test(firstChar)
+                ? firstChar === selectedLetter
+                : firstChar.toUpperCase() === selectedLetter;
+            });
+          } else if (selectedTag) {
+            return glossaryData.filter((term) =>
+              term.tags.some((tag) => tag.toLowerCase().includes(selectedTag)),
+            );
+          } else if (activeSearch) {
+            const query = activeSearch.toLowerCase();
+            return glossaryData.filter(
+              (term) =>
+                term.term.toLowerCase().includes(query) ||
+                term.definition.toLowerCase().includes(query) ||
+                term.example.toLowerCase().includes(query) ||
+                term.tags.some((tag) => tag.toLowerCase().includes(query)),
+            );
+          }
+
+          return [];
+        }
+
+        // Get all unique tags in the glossary
+        getAllTags() {
+          // Create a set to store unique tags
+          const tagsSet = new Set();
+          
+          // Extract all tags from glossary data
+          this.state.glossaryData.forEach(term => {
+            term.tags.forEach(tag => {
+              // Add the trimmed tag to the set (case-preserved)
+              tagsSet.add(tag.trim());
+            });
+          });
+          
+          // Convert set to an array and sort alphabetically
+          return Array.from(tagsSet).sort();
+        }
+        
+        // Get bookmarked terms
+        getBookmarkedTerms() {
+          return this.state.glossaryData.filter((term) =>
+            this.state.bookmarks.includes(term.id),
+          );
+        }
+
+        // Render the app based on current state
+        render() {
+          const {
+            isLoading,
+            error,
+            selectedTerm,
+            selectedLetter,
+            selectedTag,
+            activeSearch,
+            showingBookmarks,
+          } = this.state;
+
+          // Render loading state
+          if (isLoading) {
+            this.app.innerHTML = `
+            <div class="loading-container">
+              <div class="spinner"></div>
+              <p class="description">Loading glossary data...</p>
+            </div>
+          `;
+            return;
+          }
+
+          // Render error state
+          if (error) {
+            this.app.innerHTML = `
+            <div class="error-container">
+              <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <h2 class="title">Error Loading Data</h2>
+              <p class="description">${error}</p>
+              <button class="search-button" onclick="location.reload()">Try Again</button>
+            </div>
+          `;
+            return;
+          }
+
+          // Render term detail view if a term is selected
+          if (selectedTerm) {
+            const isBookmarked = this.state.bookmarks.includes(selectedTerm.id);
+
+            this.app.innerHTML = `
+            <div class="container">
+              <div class="content">
+                <div class="term-header">
+                  <h3 class="title">${selectedTerm.term}</h3>
+                  <button 
+                    class="bookmark-button ${isBookmarked ? "active" : ""}" 
+                    aria-label="${isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"}"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="${isBookmarked ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+                <div class="section-title">Definition</div>
+                <p class="term-definition">${selectedTerm.definition}</p>
+                
+                <div class="section-title">Example</div>
+                <p class="term-example">${selectedTerm.example}</p>
+                
+                <div class="section-title">Tags</div>
+                <div>
+                  ${selectedTerm.tags
+                    .map(
+                      (tag) =>
+                        `<span class="tag" data-tag="${tag}">${tag}</span>`,
+                    )
+                    .join("")}
+                </div>
+                
+                <div class="button-container">
+                  <button class="back-button">Back</button>
+                </div>
+              </div>
+            </div>
+          `;
+
+            // Add event listeners for term detail view
+            const bookmarkButton = this.app.querySelector(".bookmark-button");
+            bookmarkButton.addEventListener("click", () =>
+              this.handleBookmark(selectedTerm.id),
+            );
+
+            const tagElements = this.app.querySelectorAll(".tag");
+            tagElements.forEach((tag) => {
+              tag.addEventListener("click", () =>
+                this.handleTagClick(tag.dataset.tag),
+              );
+            });
+
+            const backButton = this.app.querySelector(".back-button");
+            backButton.addEventListener("click", this.returnToPreviousView);
+
+            return;
+          }
+
+          // Render list views (letter, tag, search, bookmarks)
+          if (
+            selectedLetter ||
+            selectedTag ||
+            activeSearch ||
+            showingBookmarks
+          ) {
+            let terms = [];
+            let title = "";
+
+            if (showingBookmarks) {
+              terms = this.getBookmarkedTerms();
+              title = "Bookmarked Terms";
+            } else {
+              terms = this.getFilteredTerms();
+
+              if (selectedLetter) {
+                title = `Terms starting with "${selectedLetter}"`;
+              } else if (selectedTag) {
+                title = `Terms tagged with "${selectedTag}"`;
+              } else if (activeSearch) {
+                title = `Search results for "${activeSearch}"`;
+              }
+            }
+
+            const termsList =
+              terms.length > 0
+                ? terms
+                    .map((term) => {
+                      const isBookmarked = this.state.bookmarks.includes(
+                        term.id,
+                      );
+                      return `
+                  <li class="term-item" data-term-id="${term.id}">
+                    <span>${term.term}</span>
+                    <button 
+                      class="bookmark-button ${isBookmarked ? "active" : ""}" 
+                      aria-label="${isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"}"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="${isBookmarked ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </button>
+                  </li>
+                `;
+                    })
+                    .join("")
+                : "<li>No terms found.</li>";
+
+            this.app.innerHTML = `
+            <div class="container">
+              <div class="content">
+                <h3 class="title">${title}</h3>
+                <ul class="term-list">
+                  ${termsList}
+                </ul>
+                <div class="button-container">
+                  <button class="back-button">Back to Home</button>
+                </div>
+              </div>
+            </div>
+          `;
+
+            // Add event listeners for terms list
+            const termItems = this.app.querySelectorAll(".term-item");
+            termItems.forEach((item) => {
+              item.addEventListener("click", () =>
+                this.handleTermClick(item.dataset.termId),
+              );
+
+              const bookmarkButton = item.querySelector(".bookmark-button");
+              bookmarkButton.addEventListener("click", (e) => {
+                e.stopPropagation();
+                this.handleBookmark(item.dataset.termId);
+              });
+            });
+
+            const backButton = this.app.querySelector(".back-button");
+            backButton.addEventListener("click", this.resetToHome);
+
+            return;
+          }
+
+          // Render home view
+          this.app.innerHTML = `
+          <div class="home-container">
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            
+            <h1 class="title">L&D Terms</h1>
+            <p class="description">Welcome to the L&D Terms reference. This resource provides detailed definitions, practical examples, and related concepts for key terms in the field of learning and development. <br>Use the alphabet navigation below to explore terms, or search for specific keywords and tags.</p>
+            
+            <div class="search-container">
+              <form class="search-form" id="search-form">
+                <div class="search-input-wrapper">
+                  <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search terms, definitions, or tags..." 
+                    value="${this.state.searchQuery}"
+                  >
+                  <div class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </div>
+                </div>
+                <button type="submit" class="search-button">Search</button>
+              </form>
+            </div>
+            
+            
+            
+            
+            
+            <p class="description">Browse by first letter:</p>
+            <div class="keyboard">
+              ${this.renderAlphabetKeyboard()}
+            </div>
+			
+			${this.renderTagsCloud()}
+			${this.state.bookmarks.length > 0 ? this.renderBookmarksSection() : ""}
+          </div>
+        `;
+
+          // Add event listeners for home view
+          const searchForm = this.app.querySelector("#search-form");
+          const searchInput = this.app.querySelector(".search-input");
+
+          // Update searchQuery state without re-rendering
+          searchInput.addEventListener("input", (e) => {
+            // Update state directly without calling setState to avoid re-render
+            this.state.searchQuery = e.target.value;
+          });
+
+          // Only search when form is submitted
+          searchForm.addEventListener("submit", this.handleSearch);
+
+          // Add event listeners for tags in the cloud
+          const tagElements = this.app.querySelectorAll(".tags-cloud .tag");
+          tagElements.forEach((tag) => {
+            tag.addEventListener("click", () =>
+              this.handleTagClick(tag.dataset.tag),
+            );
+          });
+          
+          // Add event listeners for alphabet keyboard
+          const keyButtons = this.app.querySelectorAll(".key:not(.disabled)");
+          keyButtons.forEach((key) => {
+            key.addEventListener("click", () =>
+              this.handleLetterClick(key.textContent),
+            );
+          });
+
+          // Add event listeners for bookmarks section if it exists
+          const bookmarkPills = this.app.querySelectorAll(
+            ".bookmark-pill:not(.view-all)",
+          );
+          bookmarkPills.forEach((pill) => {
+            pill.addEventListener("click", () =>
+              this.handleTermClick(pill.dataset.termId),
+            );
+          });
+
+          const viewAllButton = this.app.querySelector(
+            ".bookmark-pill.view-all",
+          );
+          if (viewAllButton) {
+            viewAllButton.addEventListener("click", () =>
+              this.handleShowBookmarks(),
+            );
+            console.log("View all bookmarks button listener added");
+          }
+        }
+
+        // Render bookmarks section for home view
+        renderBookmarksSection() {
+          const bookmarkedTerms = this.getBookmarkedTerms();
+
+          if (bookmarkedTerms.length === 0) {
+            return "";
+          }
+
+          const showAll = bookmarkedTerms.length > 4;
+          const termsToShow = showAll
+            ? bookmarkedTerms.slice(0, 4)
+            : bookmarkedTerms;
+
+          return `
+          <div class="bookmarks-section">
+            <h3 class="section-title-bookmark" >Browse by Bookmarks</h3>
+            <div class="bookmarks-container">
+              ${termsToShow
+                .map(
+                  (term) => `
+                <span class="bookmark-pill" data-term-id="${term.id}">
+                  <span class="bookmark-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </span>
+                  ${term.term}
+                </span>
+              `,
+                )
+                .join("")}
+              
+              ${
+                showAll
+                  ? `
+                <span class="bookmark-pill view-all">
+                  View all (${bookmarkedTerms.length})
+                </span>
+              `
+                  : ""
+              }
+            </div>
+          </div>
+        `;
+        }
+
+        // Render tags cloud for home view
+        renderTagsCloud() {
+          const allTags = this.getAllTags();
+          
+          // If no tags are available, return empty string
+          if (allTags.length === 0) {
+            return '';
+          }
+          
+          return `
+          <div class="tags-section">
+            <h3 class="section-title-bookmark" >Browse by Tags</h3>
+            <div class="tags-cloud">
+              ${allTags.map(tag => {
+                // Count how many terms use this tag (to potentially show the count or vary the size)
+                const count = this.state.glossaryData.filter(term => 
+                  term.tags.some(t => t.trim() === tag)
+                ).length;
+                
+                return `<span class="tag" data-tag="${tag}" data-count="${count}">${tag}</span>`;
+              }).join('')}
+            </div>
+          </div>
+          `;
+        }
+        
+        // Render alphabet keyboard for home view
+        renderAlphabetKeyboard() {
+          // Add numbers 0-9 to the keyboard
+          const numbers = "0123456789".split("");
+          const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+          const allCharacters = [...alphabet, ...numbers];
+
+          // Check which characters have terms
+          const availableCharacters = new Set(
+            this.state.glossaryData.map((term) => {
+              const firstChar = term.term.charAt(0);
+              return /^\d$/.test(firstChar)
+                ? firstChar
+                : firstChar.toUpperCase();
+            }),
+          );
+
+          return allCharacters
+            .map((char) => {
+              const hasTerms = availableCharacters.has(char);
+              const isSelected = char === this.state.selectedLetter;
+
+              let className = "key";
+              if (!hasTerms) {
+                className += " disabled";
+              }
+              if (isSelected) {
+                className += " selected";
+              }
+
+              return `<div class="${className}">${char}</div>`;
+            })
+            .join("");
+        }
+      }
+
+      // Initialize the app when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        new GlossaryApp();
+      });
+    </script>
+  </body>
+</html>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ID Lexicon: The Instructional Design Dictionary</title>
     <style>
